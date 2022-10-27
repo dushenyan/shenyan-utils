@@ -1,17 +1,17 @@
 {
-  "name": "dushenyan-util",
+  "name": "shenyan-util",
   "type": "module",
   "version": "0.1.2",
   "packageManager": "pnpm@7.12.0",
   "description": "由逻辑开发和业务引导的开源工具函数",
   "author": "Dushenyan <2645472474@qq.com>",
   "license": "MIT",
-  "homepage": "https://github.com/dbudaiya/dushenyan-utils#readme",
+  "homepage": "https://github.com/dbudaiya/shenyan-utils#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dbudaiya/dushenyan-utils.git"
+    "url": "git+https://github.com/dbudaiya/shenyan-utils.git"
   },
-  "bugs": "https://github.com/dbudaiya/dushenyan-utils/issues",
+  "bugs": "https://github.com/dbudaiya/shenyan-utils/issues",
   "keywords": [],
   "sideEffects": false,
   "exports": {
