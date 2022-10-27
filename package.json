@@ -1,5 +1,5 @@
 {
-  "name": "shenyan-util",
+  "name": "shenyan-utils",
   "type": "module",
   "version": "0.1.2",
   "packageManager": "pnpm@7.12.0",
