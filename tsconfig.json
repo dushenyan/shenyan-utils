@@ -1,14 +1,30 @@
 {
   "compilerOptions": {
+    "baseUrl": "./",
     "target": "es2018",
-    "module": "esnext",
-    "lib": ["esnext"],
+    "module": "ESNext",
+    "lib": [
+      "DOM",
+      "ES2015.Promise",
+      "ES2017"
+    ],
     "moduleResolution": "node",
     "esModuleInterop": true,
     "strict": true,
     "strictNullChecks": true,
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
-    "types": ["node"],
-  }
+    "types": [
+      "node"
+    ]
+  },
+  "exclude": [
+    "node_modules",
+    "dist",
+    "docs",
+    "test"
+  ],
+  "include": [
+    "src"
+  ]
 }
