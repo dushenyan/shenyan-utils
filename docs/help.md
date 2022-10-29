@@ -9,3 +9,9 @@
 [Yarn官网](https://yarn.bootcss.com/)
 
 [Github Action](https://docs.github.com/cn/actions)
+
+[js-func-tools](https://github.com/xiongshuang/js-func-tools.git)
+
+[changelog-standard](https://github.com/niezicheng/changelog-standard)
+
+[掘金文字](https://juejin.cn/post/7033385543094239245)
