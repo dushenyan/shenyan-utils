@@ -14,17 +14,13 @@
     "strictNullChecks": true,
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
-    "types": [
-      "node"
-    ]
   },
-  "exclude": [
-    "node_modules",
-    "dist",
-    "docs",
-    "test"
-  ],
   "include": [
-    "src"
+    "src/**/*",
+    "scripts/**/*",
+    "test/**/*",
+    "docs/**/*",
+    "theme/*",
+    "types/*.d.ts"
   ]
 }

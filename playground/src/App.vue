@@ -1,15 +1,13 @@
 <script setup lang="ts">
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
-import { getBrowserType } from 'shenyan-utils';
+import { Dayjs } from 'shenyan-utils';
 import { ref } from 'vue';
-import HelloWorld from './components/HelloWorld.vue';
-const browser = ref(getBrowserType())
+const week = ref(Dayjs())
 </script>
 
 <template>
   <div>
-    <h2>{{ browser }}</h2>
     <a href="https://vitejs.dev" target="_blank">
       <img src="/vite.svg" class="logo" alt="Vite logo">
     </a>
@@ -17,6 +15,7 @@ const browser = ref(getBrowserType())
       <img src="./assets/vue.svg" class="logo vue" alt="Vue logo">
     </a>
   </div>
+  <h2>{{ week }}</h2>
   <HelloWorld msg="Vite + Vue" />
 </template>
 

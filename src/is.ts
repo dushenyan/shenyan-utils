@@ -101,6 +101,51 @@ export function isBoolean(val: unknown): val is boolean {
 }
 
 /**
+ * 是否为正则表达式类型
+ * @param val 类型值
+ * @returns boolean
+ */
+export function isRegExp(val: unknown): val is RegExp {
+  return is(val, 'RegExp')
+}
+
+/**
+ * 是否为Symbol类型
+ * @param val 类型值
+ * @returns boolean
+ */
+export function isSymbol(val: unknown): val is symbol {
+  return is(val, 'Symbol')
+}
+
+/**
+ * 是否为Map类型
+ * @param val 类型值
+ * @returns boolean
+ */
+export function isMap(val: unknown): val is Map<any, any> {
+  return is(val, 'Map')
+}
+
+/**
+ * 是否为Set类型
+ * @param val 类型值
+ * @returns boolean
+ */
+export function isSet(val: unknown): val is Set<any> {
+  return is(val, 'Set')
+}
+
+/**
+ * 是否为BigInt类型
+ * @param val 类型值
+ * @returns boolean
+ */
+export function isBigInt(val: unknown): val is WeakMap<any, any> {
+  return is(val, 'BigInt')
+}
+
+/**
  * 是否为数组类型
  * @param val 类型值
  * @returns boolean
@@ -153,3 +198,45 @@ export function isNullOrUnDef(val: unknown): val is null | undefined {
 export const isWeekday: (date: string | Date) => boolean = (date) => {
   return (date instanceof Date ? date : new Date(date)).getDay() % 6 !== 0
 }
+
+/**
+ * @description: 是否客户端
+ */
+export function isClient() {
+  return typeof window !== 'undefined'
+}
+
+/**
+ * @description: 是否为浏览器
+ */
+export function isWindow(val: any): val is Window {
+  return typeof window !== 'undefined' && is(val, 'Window')
+}
+
+export function isElement(val: unknown): val is Element {
+  return isObject(val) && !!val.tagName
+}
+
+export const isServer = typeof window === 'undefined'
+
+// 是否为图片节点
+export function isImageDom(o: Element) {
+  return o && ['IMAGE', 'IMG'].includes(o.tagName)
+}
+
+/**
+ * 判断是否是移动端
+ */
+export function isMobile() {
+	if (
+		navigator.userAgent.match(
+			/('phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone')/i
+		)
+	) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+

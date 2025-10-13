@@ -4,7 +4,7 @@
  * @param n Number 自然数
  * @returns 
  */
-export const toChineseNumber = (n:number) => {
+export const toChineseNumber = (n: number) => {
   if (!Number.isInteger(n) && n < 0) {
     throw Error('请输入自然数');
   }

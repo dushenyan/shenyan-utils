@@ -82,8 +82,8 @@ export function formatDate(date: Date, format: string): string {
  * @param dateTime 当前传入的日期值
  * @returns 返回第几周数字值
  */
-export function getWeek(dateTime: Date): number {
-  const temptTime = new Date(dateTime.getTime())
+export function getWeek(dateTime?: Date): number {
+  const temptTime = new Date(dateTime || new Date())
   // 周几
   const weekday = temptTime.getDay() || 7
   // 周1+5天=周六
