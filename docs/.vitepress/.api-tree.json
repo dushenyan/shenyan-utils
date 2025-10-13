@@ -1,0 +1,73 @@
+[
+  {
+    "name": "formatMoney",
+    "description": "格式化金额",
+    "params": [
+      {
+        "name": "money",
+        "description": "金额"
+      },
+      {
+        "name": "symbol",
+        "description": "{$ 想拼接的值}"
+      },
+      {
+        "name": "decimals",
+        "description": "金额后几位"
+      }
+    ],
+    "returns": "返回金额以逗号隔开"
+  },
+  {
+    "name": "formatDate",
+    "description": "时间日期转换",
+    "params": [
+      {
+        "name": "date",
+        "description": "当前时间，new Date() 格式"
+      },
+      {
+        "name": "format",
+        "description": "需要转换的时间格式字符串"
+      }
+    ],
+    "returns": "返回拼接后的时间字符串"
+  },
+  {
+    "name": "getWeek",
+    "description": "获取当前日期是第几周",
+    "params": [
+      {
+        "name": "dateTime",
+        "description": "当前传入的日期值"
+      }
+    ],
+    "returns": "返回第几周数字值"
+  },
+  {
+    "name": "formatPast",
+    "description": "将时间转换为 `几秒前`、`几分钟前`、`几小时前`、`几天前`",
+    "params": [
+      {
+        "name": "param",
+        "description": "当前时间，new Date() 格式或者字符串时间格式"
+      },
+      {
+        "name": "format",
+        "description": "需要转换的时间格式字符串"
+      }
+    ],
+    "returns": "返回拼接后的时间字符串"
+  },
+  {
+    "name": "formatAxis",
+    "description": "时间问候语",
+    "params": [
+      {
+        "name": "param",
+        "description": "当前时间，new Date() 格式"
+      }
+    ],
+    "returns": "返回拼接后的时间字符串"
+  }
+]
