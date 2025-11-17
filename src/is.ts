@@ -1,6 +1,26 @@
 const toString = Object.prototype.toString
 
 /**
+ * 校验是否是字符串类型的数字
+ * @param value 字符串类型的数字
+ * @returns boolean
+ */
+export function isStringNumber(value: string): boolean {
+  if (typeof value !== 'string') return false
+  return !Number.isNaN(Number(value))
+}
+
+/**
+ * 校验是否是字符串类型的布尔值
+ * @param value 字符串类型的布尔值
+ * @returns boolean
+ */
+export function isStringBoolean(value: string): boolean {
+  if (typeof value !== 'string') return false
+  return ['true', 'false'].includes(value)
+}
+
+/**
  * 判断值是否未某个类型
  * @param val 类型值
  * @param type 匹配类型

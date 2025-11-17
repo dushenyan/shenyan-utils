@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "baseUrl": "./",
     "target": "es2018",
     "module": "ESNext",
     "lib": [
@@ -8,7 +7,7 @@
       "ES2015.Promise",
       "ES2017"
     ],
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "esModuleInterop": true,
     "strict": true,
     "strictNullChecks": true,

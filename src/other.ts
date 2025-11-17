@@ -1,4 +1,5 @@
 import { nextTick } from 'vue';
+import { isString } from './is';
 
 /**
  * 设置 自定义 tagsView 名称
@@ -95,3 +96,66 @@ export function handleEmpty(list: any) {
 	}
 	return arr;
 }
+
+/**
+ * 一个利用 a 标签下载文件的函数
+ * @param {string | Blob | File} fileURL - 文件的 URL、Blob 对象或 File 对象
+ * @param {string} [fileName] - 下载时的文件名（可选）。如果未提供，则使用当前时间戳作为文件名
+ * @throws {Error} - 如果在非浏览器环境中调用该函数，将抛出错误
+ */
+export function linkDownload(fileURL: string | Blob | File, fileName?: string): void {
+  let href: string = isString(fileURL) ? fileURL : URL.createObjectURL(fileURL)
+  const a = document.createElement('a')
+  a.style.display = 'none'
+  a.href = href
+  a.download = fileName || Date.now().toString()
+  document.body.appendChild(a)
+  a.click()
+  document.body.removeChild(a)
+  if (!isString(fileURL)) URL.revokeObjectURL(href)
+}
+
+
+/**
+ * 图片转为 Base64 字符串
+ * @param {String} imgURL 待转换的图片路径
+ * @param {String} type 转换后的图片类型
+ * @param  {Number} quality 转换后的图片质量
+ * @returns {String} Base64 字符串
+ */
+export function imageToBase64(imgURL: string, quality = 0.9): Promise<string> {
+  const img = new Image()
+  // 因为是网络资源所以会有图片跨域问题产生，此属性可以解决跨域问题
+  img.setAttribute('crossOrigin', 'anonymous')
+  // 如果需要兼容 iOS，这两个顺序一定不能换，先设置 crossOrigin 后设置 src
+  img.src = imgURL
+  return new Promise((resolve, reject) => {
+    img.onload = () => {
+      const cvs = document.createElement('canvas')
+      cvs.width = img.width
+      cvs.height = img.height
+      const ctx = cvs.getContext('2d')!
+      ctx.drawImage(img, 0, 0, cvs.width, cvs.height)
+      resolve(cvs.toDataURL('image/png', quality))
+    }
+    img.onerror = (error: any) => reject(error)
+  })
+}
+
+
+/**
+ * 获取当前设备的屏幕 DPI（每英寸像素数）
+ *  此函数通过创建一个宽度为 1 英寸的临时不可见 div 元素，
+ *  将其添加到文档中后读取其 offsetWidth 属性来计算当前设备的 DPI，然后移除该元素。
+ * @returns {number} 当前设备的 DPI（即 1 英寸所对应的像素数）
+ */
+export function getDeviceDpi(): number {
+  const tempDiv = document.createElement('div')
+  tempDiv.style.width = '1in'
+  tempDiv.style.visibility = 'hidden'
+  document.body.appendChild(tempDiv)
+  const dpi = tempDiv.offsetWidth
+  document.body.removeChild(tempDiv)
+  return dpi
+}
+
