@@ -5,8 +5,7 @@
   "description": "由逻辑开发和业务引导的开源工具函数库",
   "author": "dushenyan <dushenyan88@gmail.com>",
   "license": "MIT",
-  "homepage": "https://dushenyan.github.io/10w/pages/home/index.html",
-  "repository": "https://github.com/dbudaiya/shenyan-utils.git",
+  "repository": "https://github.com/dushenyan/shenyan-utils",
   "keywords": [
     "dushenyan-utils",
     "more-functional",
