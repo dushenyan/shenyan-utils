@@ -34,7 +34,7 @@
       ]
     }
   },
-  "icon": "https://cdn.jsdelivr.net/npm/simple-icons@v10/icons/vite.svg",
+  "iconUrl": "https://cdn.jsdelivr.net/npm/simple-icons@v10/icons/vite.svg",
   "files": [
     "dist"
   ],
