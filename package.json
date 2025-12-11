@@ -3,14 +3,10 @@
   "type": "module",
   "packageManager": "pnpm@7.33.7",
   "description": "由逻辑开发和业务引导的开源工具函数库",
-  "author": "Dushenyan <2645472474@qq.com>",
+  "author": "dushenyan <dushenyan88@gmail.com>",
   "license": "MIT",
-  "homepage": "https://github.com/dbudaiya/shenyan-utils#readme",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/dbudaiya/shenyan-utils.git"
-  },
-  "bugs": "https://github.com/dbudaiya/shenyan-utils/issues",
+  "homepage": "https://dushenyan.github.io/10w/pages/home/index.html",
+  "repository": "https://github.com/dbudaiya/shenyan-utils.git",
   "keywords": [
     "dushenyan-utils",
     "more-functional",
@@ -24,8 +20,8 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.mjs"
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
     }
   },
   "main": "./dist/index.mjs",
@@ -39,6 +35,7 @@
       ]
     }
   },
+  "icon": "https://cdn.jsdelivr.net/npm/simple-icons@v10/icons/vite.svg",
   "files": [
     "dist"
   ],
@@ -47,7 +44,7 @@
     "build": "nr clean && unbuild",
     "dev": "unbuild --stub",
     "lint": "eslint .",
-    "lint:fix": "eslint ./src --fix",
+    "lint:fix": "eslint . --fix",
     "release": "bumpp && npm publish",
     "start": "esno src/mock.ts",
     "test": "vitest",
@@ -57,10 +54,16 @@
     "docs:preview": "vitepress preview docs",
     "play:dev": "pnpm --filter playground dev",
     "play:build": "pnpm --filter playground build",
-    "play:preview": "pnpm --filter playground preview"
+    "play:preview": "pnpm --filter playground preview",
+    "lint:ui": "npx @eslint/config-inspector"
+  },
+  "dependencies": {
+    "dayjs": "^1.11.18",
+    "jsonc-parser": "^3.3.1",
+    "lodash-es": "^4.17.21"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^0.27.0",
+    "@antfu/eslint-config": "^6.6.1",
     "@faker-js/faker": "^10.1.0",
     "@types/doctrine": "^0.0.9",
     "@types/lodash-es": "^4.17.12",
@@ -68,7 +71,7 @@
     "@vitest/ui": "^4.0.1",
     "bumpp": "^8.2.1",
     "doctrine": "^3.0.0",
-    "eslint": "^8.23.1",
+    "eslint": "^9.39.1",
     "esno": "^0.16.3",
     "js-cookie": "^3.0.5",
     "pnpm": "^7.33.7",
@@ -78,10 +81,5 @@
     "vite": "^7.1.11",
     "vitepress": "^2.0.0-alpha.12",
     "vitest": "^4.0.1"
-  },
-  "dependencies": {
-    "dayjs": "^1.11.18",
-    "jsonc-parser": "^3.3.1",
-    "lodash-es": "^4.17.21"
   }
 }

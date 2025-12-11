@@ -8,12 +8,12 @@ export default defineBuildConfig({
   clean: true,
   rollup: {
     emitCJS: true,
-    inlineDependencies: true,  // 内联依赖以避免绝对路径引用
+    inlineDependencies: true, // 内联依赖以避免绝对路径引用
   },
   // 确保不生成stub文件
   stub: false,
   // 使用更现代的构建选项
   replace: {
-    'process.env.NODE_ENV': JSON.stringify('production')
-  }
+    'process.env.NODE_ENV': JSON.stringify('production'),
+  },
 })

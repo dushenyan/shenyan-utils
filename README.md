@@ -3,7 +3,7 @@
 由逻辑开发和业务引导的开源工具函数
 
 # 使用
-> npm istall -g @shenyan/utils 
+> npm istall -g @shenyan/utils
 
 ### 帮助网站
 [VuePress Alpha](https://vitepress.vuejs.org/)

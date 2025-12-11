@@ -16,6 +16,7 @@ describe('类型判断', () => {
   })
 
   it('是否为函数', () => {
+    // eslint-disable-next-line no-new-func
     expect(isFunction(new Function())).toBe(true)
   })
 

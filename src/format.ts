@@ -4,9 +4,9 @@
  * @param decimals 去小数点后几位
  * @returns 处理后的小数位值
  */
-const formatToFixed = (num: string, decimals = 2) => {
+function formatToFixed(num: string, decimals = 2) {
   return (
-    Math.round((parseFloat(num) + Number.EPSILON) * 10 ** decimals) / 10 ** decimals
+    Math.round((Number.parseFloat(num) + Number.EPSILON) * 10 ** decimals) / 10 ** decimals
   ).toFixed(decimals)
 }
 
@@ -17,9 +17,11 @@ const formatToFixed = (num: string, decimals = 2) => {
  * @param decimals 金额后几位
  * @returns 返回金额以逗号隔开
  */
-export const formatMoney = (money: string, decimals = 2, symbol = '$') => formatToFixed(money, decimals)
-  .replace(/\B(?=(\d{3})+\b)/g, ',')
-  .replace(/^/, `${symbol}`)
+export function formatMoney(money: string, decimals = 2, symbol = '$') {
+  return formatToFixed(money, decimals)
+    .replace(/\B(?=(\d{3})+\b)/g, ',')
+    .replace(/^/, `${symbol}`)
+}
 
 /**
  * 时间日期转换
@@ -169,4 +171,3 @@ export function formatAxis(param: Date = new Date()): string | undefined {
   if (hours >= 0 && hours <= 6)
     return '凌晨好 🌛'
 }
-

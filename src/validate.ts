@@ -8,11 +8,11 @@ export function verifyNumberPercentage(val: string): string {
   // 匹配空格
   let v = val.replace(/(^\s*)|(\s*$)/g, '')
   // 只能是数字和小数点，不能是其他输入
-  v = v.replace(/[^\d]/g, '')
+  v = v.replace(/\D/g, '')
   // 不能以0开始
   v = v.replace(/^0/g, '')
   // 数字超过100，赋值成最大值100
-  v = v.replace(/^[1-9]\d\d{1,3}$/, '100')
+  v = v.replace(/^[1-9]\d{2,4}$/, '100')
   return v
 }
 
@@ -24,7 +24,7 @@ export function verifyNumberPercentage(val: string): string {
 export function verifyNumberPercentageFloat(val: string): string {
   let v = verifyNumberIntegerAndFloat(val)
   // 数字超过100，赋值成最大值100
-  v = v.replace(/^[1-9]\d\d{1,3}$/, '100')
+  v = v.replace(/^[1-9]\d{2,4}$/, '100')
   // 超过100之后不给再输入值
   v = v.replace(/^100\.$/, '100')
   return v
@@ -47,7 +47,7 @@ export function verifyNumberIntegerAndFloat(val: string) {
   // 小数只能出现1位
   v = v.replace('.', '$#$').replace(/\./g, '').replace('$#$', '.')
   // 小数点后面保留2位
-  v = v.replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3')
+  v = v.replace(/^(-)*(\d+)\.(\d\d).*$/, '$1$2.$3')
   return v
 }
 
@@ -60,13 +60,13 @@ export function verifiyNumberInteger(val: string) {
   // 匹配空格
   let v = val.replace(/(^\s*)|(\s*$)/g, '')
   // 去掉 '.' , 防止贴贴的时候出现问题 如 0.1.12.12
-  v = v.replace(/[\.]*/g, '')
+  v = v.replace(/\.*/g, '')
   // 去掉以 0 开始后面的数, 防止贴贴的时候出现问题 如 00121323
-  v = v.replace(/(^0[\d]*)$/g, '0')
+  v = v.replace(/(^0\d*)$/g, '0')
   // 首位是0,只能出现一次
   v = v.replace(/^0\d$/g, '0')
   // 只匹配数字
-  v = v.replace(/[^\d]/g, '')
+  v = v.replace(/\D/g, '')
   return v
 }
 
@@ -90,7 +90,7 @@ export function verifyCnAndSpace(val: string) {
  */
 export function verifyEnAndSpace(val: string) {
   // 匹配英文与空格
-  let v = val.replace(/[a-zA-Z]+/g, '')
+  let v = val.replace(/[a-z]+/gi, '')
   // 匹配空格
   v = v.replace(/(^\s*)|(\s*$)/g, '')
   return v
@@ -180,13 +180,13 @@ export function verifyNumberCnUppercase(val: any, unit = '仟佰拾亿仟佰拾�
 export function verifyPasswordStrength(val: string): string {
   let v = ''
   // 弱：纯数字，纯字母，纯特殊字符
-  if (/^(?:\d+|[a-zA-Z]+|[!@#$%^&\.*]+){6,16}$/.test(val))
+  if (/^(?:\d+|[a-z]+|[!@#$%^&.*]+){6,16}$/i.test(val))
     v = '弱'
   // 中：字母+数字，字母+特殊字符，数字+特殊字符
-  if (/^(?![a-zA-z]+$)(?!\d+$)(?![!@#$%^&\.*]+$)[a-zA-Z\d!@#$%^&\.*]{6,16}$/.test(val))
+  if (/^(?![A-z]+$)(?!\d+$)(?![!@#$%^&.*]+$)[a-z\d!@#$%^&.*]{6,16}$/i.test(val))
     v = '中'
   // 强：字母+数字+特殊字符
-  if (/^(?![a-zA-z]+$)(?!\d+$)(?![!@#$%^&\.*]+$)(?![a-zA-z\d]+$)(?![a-zA-z!@#$%^&\.*]+$)(?![\d!@#$%^&\.*]+$)[a-zA-Z\d!@#$%^&\.*]{6,16}$/.test(val))
+  if (/^(?![A-z]+$)(?!\d+$)(?![!@#$%^&.*]+$)(?![A-z\d]+$)(?![A-z!@#$%&.*]+$)(?![\d!@#$%^&.*]+$)[a-z\d!@#$%^&.*]{6,16}$/i.test(val))
     v = '强'
   return v
 }
@@ -196,113 +196,122 @@ export function verifyPasswordStrength(val: string): string {
  * @param val 当前值字符串
  * @returns boolean
  */
-export const verifyPhone = (val: string): boolean => /^1[3456789]\d{9}$/.test(val)
+export const verifyPhone = (val: string): boolean => /^1[3-9]\d{9}$/.test(val)
 
 /**
-  * 验证验证银行卡号长度
-  *
-  */
-export const varifyBankNumber = (val: string): boolean => /^([1-9]{1})(\d{15}|\d{18})$/.test(val)
+ * 验证验证银行卡号长度
+ *
+ */
+export const varifyBankNumber = (val: string): boolean => /^([1-9])(\d{15}|\d{18})$/.test(val)
 
 /**
-  * 验证国内电话号码
-  * @param val 当前值字符串
-  * @returns boolean
-  */
+ * 验证国内电话号码
+ * @param val 当前值字符串
+ * @returns boolean
+ */
 export const verifyTelPhone = (val: string): boolean => /\d{3}-\d{8}|\d{4}-\d{7}/.test(val)
 
 /**
-  * 验证登录账号 (字母开头，允许5-16字节，允许字母数字下划线)
-  * @param val 当前值字符串
-  * @returns boolean
-  */
-export const verifyAccount = (val: string): boolean => /^[a-zA-Z][a-zA-Z0-9_]{4,15}$/.test(val)
+ * 验证登录账号 (字母开头，允许5-16字节，允许字母数字下划线)
+ * @param val 当前值字符串
+ * @returns boolean
+ */
+export const verifyAccount = (val: string): boolean => /^[a-z]\w{4,15}$/i.test(val)
 
 /**
-  * 验证密码 (以字母开头，长度在6~16之间，只能包含字母、数字和下划线)
-  * @param val 当前值字符串
-  * @returns boolean
-  */
-export const verifyPassword = (val: string): boolean =>
-  !/^[a-zA-Z]\w{5,15}$/.test(val)
+ * 验证密码 (以字母开头，长度在6~16之间，只能包含字母、数字和下划线)
+ * @param val 当前值字符串
+ * @returns boolean
+ */
+export function verifyPassword(val: string): boolean {
+  return !/^[a-z]\w{5,15}$/i.test(val)
+}
 
 /**
-  * 验证强密码 (字母+数字+特殊字符，长度在6-16之间)
-  * @param val 当前值字符串
-  * @returns boolean
-  */
-export const verifyPasswordPowerful = (val: string): boolean =>
-  /^(?![a-zA-z]+$)(?!\d+$)(?![!@#$%^&\.*]+$)(?![a-zA-z\d]+$)(?![a-zA-z!@#$%^&\.*]+$)(?![\d!@#$%^&\.*]+$)[a-zA-Z\d!@#$%^&\.*]{6,16}$/
+ * 验证强密码 (字母+数字+特殊字符，长度在6-16之间)
+ * @param val 当前值字符串
+ * @returns boolean
+ */
+export function verifyPasswordPowerful(val: string): boolean {
+  return /^(?![A-z]+$)(?!\d+$)(?![!@#$%^&.*]+$)(?![A-z\d]+$)(?![A-z!@#$%&.*]+$)(?![\d!@#$%^&.*]+$)[a-z\d!@#$%^&.*]{6,16}$/i
     .test(val)
+}
 
 /**
  * 验证IP地址
  * @param val 当前值字符串
  * @returns boolean
  */
-export const verifyIPAddress = (val: string): boolean =>
-  /^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/
+export function verifyIPAddress(val: string): boolean {
+  return /^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/
     .test(val)
+}
 
 /**
  * 验证邮箱
  * @param val 当前值字符串
  * @returns boolean
  */
-export const verifyEmail = (val: string): boolean =>
-  /^[A-Za-z0-9\u4E00-\u9FA5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
+export function verifyEmail(val: string): boolean {
+  return /^[A-Z0-9\u4E00-\u9FA5]+@[\w-]+(\.[\w-]+)+$/i
     .test(val)
+}
 
 /**
  * 验证身份证
  * @param val 当前值字符串
  * @returns boolean
  */
-export const verifyIdCard = (val: string): boolean =>
-  /^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/
+export function verifyIdCard(val: string): boolean {
+  return /^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9X]$/i
     .test(val)
+}
 
 /**
  * 验证中文姓名
  * @param val 当前值字符串
  * @returns boolean
  */
-export const verifyFullName = (val: string): boolean =>
-  /^[\u4E00-\u9FA5]{1,6}(·[\u4E00-\u9FA5]{1,6}){0,2}$/
+export function verifyFullName(val: string): boolean {
+  return /^[\u4E00-\u9FA5]{1,6}(·[\u4E00-\u9FA5]{1,6}){0,2}$/
     .test(val)
+}
 
 /**
  * 验证邮政编码
  * @param val 当前值字符串
  * @returns boolean
  */
-export const verifyPostalCode = (val: string): boolean => /^[1-9][0-9]{5}$/.test(val)
+export const verifyPostalCode = (val: string): boolean => /^[1-9]\d{5}$/.test(val)
 
 /**
  * 验证车牌号
  * @param val 当前值字符串
- * @returns {Boolean}
+ * @returns {boolean}
  */
-export const verifyCarNum = (val: string): boolean =>
-  /^(([京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领][A-Z](([0-9]{5}[DF])|([DF]([A-HJ-NP-Z0-9])[0-9]{4})))|([京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领][A-Z][A-HJ-NP-Z0-9]{4}[A-HJ-NP-Z0-9挂学警港澳使领]))$/
+export function verifyCarNum(val: string): boolean {
+  return /^(([京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领][A-Z]((\d{5}[DF])|([DF]([A-HJ-NP-Z0-9])\d{4})))|([京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领][A-Z][A-HJ-NP-Z0-9]{4}[A-HJ-NP-Z0-9挂学警港澳使领]))$/
     .test(val)
+}
 
 /**
  * 验证统一社会信用代码
  * @param val 当前值字符串
  * @returns boolean
  */
-export const checkCreditCode = (val: string): boolean =>
-  /^[0-9A-HJ-NPQRTUWXY]{2}\d{6}[0-9A-HJ-NPQRTUWXY]{10}$/g.test(val)
+export function checkCreditCode(val: string): boolean {
+  return /^[0-9A-HJ-NPQRTUWXY]{2}\d{6}[0-9A-HJ-NPQRTUWXY]{10}$/.test(val)
+}
 
 /**
  * 验证url
  * @param url
  * @returns boolean
  */
-export const checkUrl = (url: string): boolean =>
-  /^((https?|ftp|file):\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/
+export function checkUrl(url: string): boolean {
+  return /^((https?|ftp|file):\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*$/
     .test(url)
+}
 
 /**
  * url 处理
@@ -312,11 +321,14 @@ export const checkUrl = (url: string): boolean =>
 export function verifyUrl(val: string) {
   // false: url不正确
   if (
-    !/^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})).?)(?::\d{2,5})?(?:[/?#]\S*)?$/i.test(
-      val
+    !/^(?:(?:https?|ftp):)?\/\/(?:\S+@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[01])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4])|(?:[a-z\u00A1-\uFFFF0-9]-*)*[a-z\u00A1-\uFFFF0-9](?:\.(?:[a-z\u00A1-\uFFFF0-9]-*)*[a-z\u00A1-\uFFFF0-9])*\.[a-z\u00A1-\uFFFF]{2,}.?)(?::\d{2,5})?(?:[/?#]\S*)?$/i.test(
+      val,
     )
-  )
-    return false;
+  ) {
+    return false
+  }
   // true: url正确
-  else return true;
+  else {
+    return true
+  }
 }

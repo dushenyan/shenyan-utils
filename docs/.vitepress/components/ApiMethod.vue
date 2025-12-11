@@ -1,56 +1,6 @@
-<template>
-  <div class="api-method">
-    <div class="method-header">
-      <h3 :id="method.name" class="method-name">{{ method.name }}</h3>
-      <span class="method-tag">Function</span>
-    </div>
-    
-    <p class="method-description">{{ method.description }}</p>
-    
-    <div v-if="method.params && method.params.length > 0" class="method-params">
-      <h4>参数</h4>
-      <div class="params-table">
-        <div 
-          v-for="(param, index) in method.params" 
-          :key="param.name"
-          class="param-row"
-        >
-          <div class="param-info">
-            <span class="param-name">{{ param.name }}</span>
-            <span class="param-type">string</span>
-          </div>
-          <div class="param-desc">{{ param.description }}</div>
-        </div>
-      </div>
-    </div>
-    
-    <div v-if="method.returns" class="method-returns">
-      <h4>返回值</h4>
-      <div class="returns-content">
-        <span class="returns-type">string</span>
-        <p>{{ method.returns }}</p>
-      </div>
-    </div>
-    
-    <div class="method-example">
-      <h4>示例</h4>
-      <div class="example-content">
-        <div class="example-code">
-          <pre><code class="language-js" v-html="highlightedCode"></code></pre>
-        </div>
-        <div class="example-output" v-if="getMethodOutput()">
-          <h5>输出</h5>
-          <pre><code class="language-text" v-html="highlightedOutput"></code></pre>
-        </div>
-      </div>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
-import { computed } from 'vue'
-// @ts-ignore
 import Prism from 'prismjs'
+import { computed } from 'vue'
 import 'prismjs/themes/prism-tomorrow.css'
 import 'prismjs/components/prism-javascript'
 
@@ -70,7 +20,7 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const getExampleUsage = () => {
+function getExampleUsage() {
   const methodName = props.method.name
   switch (methodName) {
     case 'formatMoney':
@@ -98,7 +48,7 @@ const result = ${methodName}()`
   }
 }
 
-const getMethodOutput = () => {
+function getMethodOutput() {
   const methodName = props.method.name
   switch (methodName) {
     case 'formatMoney':
@@ -120,21 +70,77 @@ const highlightedCode = computed(() => {
   return Prism.highlight(
     `import { ${props.method.name} } from 'shenyan-utils'\n\n${getExampleUsage()}`,
     Prism.languages.javascript,
-    'javascript'
+    'javascript',
   )
 })
 
 const highlightedOutput = computed(() => {
   const output = getMethodOutput()
-  if (!output) return ''
-  
+  if (!output)
+    return ''
+
   return Prism.highlight(
     output,
     Prism.languages.text,
-    'text'
+    'text',
   )
 })
 </script>
+
+<template>
+  <div class="api-method">
+    <div class="method-header">
+      <h3 :id="method.name" class="method-name">
+        {{ method.name }}
+      </h3>
+      <span class="method-tag">Function</span>
+    </div>
+
+    <p class="method-description">
+      {{ method.description }}
+    </p>
+
+    <div v-if="method.params && method.params.length > 0" class="method-params">
+      <h4>参数</h4>
+      <div class="params-table">
+        <div
+          v-for="(param) in method.params"
+          :key="param.name"
+          class="param-row"
+        >
+          <div class="param-info">
+            <span class="param-name">{{ param.name }}</span>
+            <span class="param-type">string</span>
+          </div>
+          <div class="param-desc">
+            {{ param.description }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div v-if="method.returns" class="method-returns">
+      <h4>返回值</h4>
+      <div class="returns-content">
+        <span class="returns-type">string</span>
+        <p>{{ method.returns }}</p>
+      </div>
+    </div>
+
+    <div class="method-example">
+      <h4>示例</h4>
+      <div class="example-content">
+        <div class="example-code">
+          <pre><code class="language-js" v-html="highlightedCode" /></pre>
+        </div>
+        <div v-if="getMethodOutput()" class="example-output">
+          <h5>输出</h5>
+          <pre><code class="language-text" v-html="highlightedOutput" /></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
 
 <style scoped>
 .api-method {
@@ -317,12 +323,12 @@ const highlightedOutput = computed(() => {
   .api-method {
     padding: 1rem;
   }
-  
+
   .method-header {
     flex-direction: column;
     align-items: flex-start;
   }
-  
+
   .method-tag {
     margin-top: 0.5rem;
   }

@@ -1,12 +1,12 @@
 import { uniq } from 'lodash-es'
 
 export function getChildrenLabelMenu(data: any, type: string) {
-  let arr: Array<number> = []
+  const arr: Array<number> = []
 
   data.map((item: any) => {
     Object.keys(item).map((i) => {
       if (i === type) {
-        item[i]?.map((chilrenItem: { [x: string]: { label?: any }[]; label?: any }) => {
+        item[i]?.map((chilrenItem: { [x: string]: { label?: any }[], label?: any }) => {
           Object.keys(chilrenItem).map((ci) => {
             if (ci === type) {
               arr.push(item.label)
@@ -33,13 +33,13 @@ export function getChildrenLabelMenu(data: any, type: string) {
  * @returns 新数组
  */
 export function getAllLabelMenu(data: any, type: string) {
-  let arr: Array<number> = []
+  const arr: Array<number> = []
 
-  data.map((item: { [x: string]: { [x: string]: { label?: any }[]; label?: any }[]; label?: any }) => {
+  data.map((item: { [x: string]: { [x: string]: { label?: any }[], label?: any }[], label?: any }) => {
     Object.keys(item).map((i) => {
       arr.push(item.label)
       if (i === type) {
-        item[i]?.map((chilrenItem: { [x: string]: { label?: any }[]; label?: any }) => {
+        item[i]?.map((chilrenItem: { [x: string]: { label?: any }[], label?: any }) => {
           Object.keys(chilrenItem).map((ci) => {
             arr.push(chilrenItem.label)
             if (ci === type) {

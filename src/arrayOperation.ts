@@ -6,34 +6,35 @@
  */
 // 优化后的 judementSameArr 函数
 export function judgmentSameArr(newArr: unknown[] | string[], oldArr: string[]): boolean {
-	const news = removeDuplicate(newArr);
-	const olds = removeDuplicate(oldArr);
-	
-	// 使用 every 方法简化逻辑
-	return news.length <= olds.length && news.every(item => olds.includes(item as string));
+  const news = removeDuplicate(newArr)
+  const olds = removeDuplicate(oldArr)
+
+  // 使用 every 方法简化逻辑
+  return news.length <= olds.length && news.every(item => olds.includes(item as string))
 }
 
 // 优化后的 removeDuplicate 函数
 export function removeDuplicate(arr: any[], attr?: string) {
-	if (!arr || !arr.length) {
-		return arr;
-	}
-	
-	if (attr) {
-		// 使用 Map 来优化去重逻辑
-		const seen = new Map();
-		return arr.filter(item => {
-			const key = item[attr];
-			if (seen.has(key)) {
-				return false;
-			}
-			seen.set(key, true);
-			return true;
-		});
-	} else {
-		// 简化数组去重
-		return [...new Set(arr)];
-	}
+  if (!arr || !arr.length) {
+    return arr
+  }
+
+  if (attr) {
+    // 使用 Map 来优化去重逻辑
+    const seen = new Map()
+    return arr.filter((item) => {
+      const key = item[attr]
+      if (seen.has(key)) {
+        return false
+      }
+      seen.set(key, true)
+      return true
+    })
+  }
+  else {
+    // 简化数组去重
+    return [...new Set(arr)]
+  }
 }
 
 /**
@@ -43,22 +44,27 @@ export function removeDuplicate(arr: any[], attr?: string) {
  * @returns 相同返回 true，反之则反
  */
 export function isObjectValueEqual(a: { [key: string]: any }, b: { [key: string]: any }) {
-	if (!a || !b) return false;
-	let aProps = Object.getOwnPropertyNames(a);
-	let bProps = Object.getOwnPropertyNames(b);
-	if (aProps.length != bProps.length) return false;
-	for (let i = 0; i < aProps.length; i++) {
-		let propName = aProps[i];
-		let propA = a[propName];
-		let propB = b[propName];
-		if (!b.hasOwnProperty(propName)) return false;
-		if (propA instanceof Object) {
-			if (!isObjectValueEqual(propA, propB)) return false;
-		} else if (propA !== propB) {
-			return false;
-		}
-	}
-	return true;
+  if (!a || !b)
+    return false
+  const aProps = Object.getOwnPropertyNames(a)
+  const bProps = Object.getOwnPropertyNames(b)
+  if (aProps.length !== bProps.length)
+    return false
+  for (let i = 0; i < aProps.length; i++) {
+    const propName = aProps[i]
+    const propA = a[propName]
+    const propB = b[propName]
+    if (!b.hasOwnProperty(propName))
+      return false
+    if (propA instanceof Object) {
+      if (!isObjectValueEqual(propA, propB))
+        return false
+    }
+    else if (propA !== propB) {
+      return false
+    }
+  }
+  return true
 }
 
 /**
@@ -67,14 +73,12 @@ export function isObjectValueEqual(a: { [key: string]: any }, b: { [key: string]
  * @param key 匹配键
  * @returns 新数组
  */
-export function takeKeyByArray(oldArr: Array<any>, key: string) {
-	let newArr: Array<string> = []
-	oldArr.map((i: any) => {
-		Object.keys(i).map(ii => {
-			if (ii === key) {
-				newArr.push(i[ii])
-			}
-		})
-	})
-	return newArr
+export function takeKeyByArray(oldArr: Array<any>, key: string): Array<any> {
+  return oldArr
+    .filter(item => item && typeof item === 'object')
+    .flatMap(item =>
+      Object.entries(item)
+        .filter(([k]) => k === key)
+        .map(([, v]) => v),
+    )
 }

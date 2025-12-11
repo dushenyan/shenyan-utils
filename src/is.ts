@@ -6,7 +6,8 @@ const toString = Object.prototype.toString
  * @returns boolean
  */
 export function isStringNumber(value: string): boolean {
-  if (typeof value !== 'string') return false
+  if (typeof value !== 'string')
+    return false
   return !Number.isNaN(Number(value))
 }
 
@@ -16,7 +17,8 @@ export function isStringNumber(value: string): boolean {
  * @returns boolean
  */
 export function isStringBoolean(value: string): boolean {
-  if (typeof value !== 'string') return false
+  if (typeof value !== 'string')
+    return false
   return ['true', 'false'].includes(value)
 }
 
@@ -44,7 +46,7 @@ export function isFunction<T = Function>(val: unknown): val is T {
  * @param val 变量值
  * @returns boolean
  */
-export const isDef = <T = unknown>(val?: T): val is T => {
+export function isDef<T = unknown>(val?: T): val is T {
   return typeof val !== 'undefined'
 }
 
@@ -53,7 +55,7 @@ export const isDef = <T = unknown>(val?: T): val is T => {
  * @param val 变量值
  * @returns boolean
  */
-export const isUnDef = <T = unknown>(val?: T): val is T => {
+export function isUnDef<T = unknown>(val?: T): val is T {
   return !isDef(val)
 }
 
@@ -62,7 +64,7 @@ export const isUnDef = <T = unknown>(val?: T): val is T => {
  * @param val 类型值
  * @returns boolean
  */
-export const isObject = (val: any): val is Record<any, any> => {
+export function isObject(val: any): val is Record<any, any> {
   return val !== null && is(val, 'Object')
 }
 
@@ -248,15 +250,14 @@ export function isImageDom(o: Element) {
  * 判断是否是移动端
  */
 export function isMobile() {
-	if (
-		navigator.userAgent.match(
-			/('phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone')/i
-		)
-	) {
-		return true;
-	} else {
-		return false;
-	}
+  if (
+    navigator.userAgent.match(
+      /('phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone')/i,
+    )
+  ) {
+    return true
+  }
+  else {
+    return false
+  }
 }
-
-

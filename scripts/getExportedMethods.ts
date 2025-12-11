@@ -1,7 +1,6 @@
-import fs from 'fs'
-import path from 'path'
-import { fileURLToPath } from 'url'
-import { dirname } from 'path'
+import fs from 'node:fs'
+import path, { dirname } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import doctrine from 'doctrine'
 
 // 获取当前文件的目录路径
@@ -16,12 +15,12 @@ const projectRoot = path.resolve(__dirname, '..')
  * @param filePath 文件路径
  * @returns 包含方法名和注释的对象数组
  */
-function parseJSDocComments(filePath: string): Array<{ name: string; description: string; params: Array<{ name: string, description: string }>; returns: string | null }> {
+function parseJSDocComments(filePath: string): Array<{ name: string, description: string, params: Array<{ name: string, description: string }>, returns: string | null }> {
   try {
     const content = fs.readFileSync(filePath, 'utf-8')
 
     // 存储解析结果
-    const results: Array<{ name: string; description: string; params: Array<{ name: string, description: string }>; returns: string | null }> = []
+    const results: Array<{ name: string, description: string, params: Array<{ name: string, description: string }>, returns: string | null }> = []
 
     // 先找到所有导出函数的位置
     const exportPositions: Array<{ start: number, end: number, name: string }> = []
@@ -32,7 +31,7 @@ function parseJSDocComments(filePath: string): Array<{ name: string; description
       exportPositions.push({
         start: exportMatch.index,
         end: exportMatch.index + exportMatch[0].length,
-        name: exportMatch[1]
+        name: exportMatch[1],
       })
     }
 
@@ -40,10 +39,12 @@ function parseJSDocComments(filePath: string): Array<{ name: string; description
     for (const exportPos of exportPositions) {
       // 向前查找最近的 JSDoc 注释
       const commentStartPos = content.lastIndexOf('/**', exportPos.start)
-      if (commentStartPos === -1) continue
+      if (commentStartPos === -1)
+        continue
 
       const commentEndPos = content.indexOf('*/', commentStartPos)
-      if (commentEndPos === -1 || commentEndPos > exportPos.start) continue
+      if (commentEndPos === -1 || commentEndPos > exportPos.start)
+        continue
 
       const commentBlock = content.substring(commentStartPos, commentEndPos + 2)
 
@@ -55,7 +56,7 @@ function parseJSDocComments(filePath: string): Array<{ name: string; description
           .filter(tag => tag.title === 'param')
           .map(tag => ({
             name: tag.name || '',
-            description: tag.description || ''
+            description: tag.description || '',
           }))
 
         const returnsTag = parsed.tags.find(tag => tag.title === 'returns')
@@ -65,30 +66,31 @@ function parseJSDocComments(filePath: string): Array<{ name: string; description
           name: exportPos.name,
           description: parsed.description || '',
           params,
-          returns
+          returns,
         })
-      } catch (parseError) {
+      }
+      catch (parseError) {
         console.error(`解析方法 ${exportPos.name} 时出错:`, parseError)
       }
     }
 
     return results
-  } catch (error) {
+  }
+  catch (error) {
     console.error(`错误解析文件 ${filePath}:`, error)
     return []
   }
 }
 
 interface SourceMeteVO {
-  name: string;
-  description: string;
+  name: string
+  description: string
   params: Array<{
-    name: string;
-    description: string;
-  }>;
-  returns: string | null;
+    name: string
+    description: string
+  }>
+  returns: string | null
 }
-
 
 /**
  * 获取文件中所有导出的方法及其注释
@@ -119,7 +121,8 @@ export async function getExportedMethods(): Promise<SourceMeteVO[] | undefined> 
     // } else {
     //   console.log('   未找到导出的方法\n')
     // }
-  } catch (error) {
+  }
+  catch (error) {
     console.error(' 获取导出方法时出错:', error)
   }
 }

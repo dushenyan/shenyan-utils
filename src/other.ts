@@ -1,5 +1,5 @@
-import { nextTick } from 'vue';
-import { isString } from './is';
+import { nextTick } from 'vue'
+import { isString } from './is'
 
 /**
  * 设置 自定义 tagsView 名称
@@ -7,16 +7,17 @@ import { isString } from './is';
  * @returns 返回当前 tagsViewName 名称
  */
 export function setTagsViewNameI18n(item: any) {
-	let tagsViewName: any = '';
-	const { query, params, meta } = item;
-	if (query?.tagsViewName || params?.tagsViewName) {
-		// 非国际化
-		tagsViewName = query?.tagsViewName || params?.tagsViewName;
-	} else {
-		// 非自定义 tagsView 名称
-		tagsViewName = meta.title;
-	}
-	return tagsViewName;
+  let tagsViewName: any = ''
+  const { query, params, meta } = item
+  if (query?.tagsViewName || params?.tagsViewName) {
+    // 非国际化
+    tagsViewName = query?.tagsViewName || params?.tagsViewName
+  }
+  else {
+    // 非自定义 tagsView 名称
+    tagsViewName = meta.title
+  }
+  return tagsViewName
 }
 
 /**
@@ -25,23 +26,23 @@ export function setTagsViewNameI18n(item: any) {
  * @param arr 列表数据
  * @description data-xxx 属性用于存储页面或应用程序的私有自定义数据
  */
-export const lazyImg = (el: any, arr: any) => {
-	const io = new IntersectionObserver((res) => {
-		res.forEach((v: any) => {
-			if (v.isIntersecting) {
-				const { img, key } = v.target.dataset;
-				v.target.src = img;
-				v.target.onload = () => {
-					io.unobserve(v.target);
-					arr[key]['loading'] = false;
-				};
-			}
-		});
-	});
-	nextTick(() => {
-		document.querySelectorAll(el).forEach((img) => io.observe(img));
-	});
-};
+export function lazyImg(el: any, arr: any) {
+  const io = new IntersectionObserver((res) => {
+    res.forEach((v: any) => {
+      if (v.isIntersecting) {
+        const { img, key } = v.target.dataset
+        v.target.src = img
+        v.target.onload = () => {
+          io.unobserve(v.target)
+          arr[key].loading = false
+        }
+      }
+    })
+  })
+  nextTick(() => {
+    document.querySelectorAll(el).forEach(img => io.observe(img))
+  })
+}
 
 /**
  * 复制对象属性
@@ -49,9 +50,9 @@ export const lazyImg = (el: any, arr: any) => {
  * @param dest 目标对象
  */
 export function copyProperties(src: any, dest: any) {
-	for(let k in src) {
-		dest[k] = src[k];
-	}
+  for (const k in src) {
+    dest[k] = src[k]
+  }
 }
 
 /**
@@ -60,20 +61,22 @@ export function copyProperties(src: any, dest: any) {
  * @returns 克隆后的对象
  */
 export function deepClone(obj: any) {
-	let newObj: any;
-	try {
-		newObj = obj.push ? [] : {};
-	} catch (error) {
-		newObj = {};
-	}
-	for (let attr in obj) {
-		if (obj[attr] && typeof obj[attr] === 'object') {
-			newObj[attr] = deepClone(obj[attr]);
-		} else {
-			newObj[attr] = obj[attr];
-		}
-	}
-	return newObj;
+  let newObj: any
+  try {
+    newObj = obj.push ? [] : {}
+  }
+  catch (error) {
+    newObj = {}
+  }
+  for (const attr in obj) {
+    if (obj[attr] && typeof obj[attr] === 'object') {
+      newObj[attr] = deepClone(obj[attr])
+    }
+    else {
+      newObj[attr] = obj[attr]
+    }
+  }
+  return newObj
 }
 
 /**
@@ -83,18 +86,18 @@ export function deepClone(obj: any) {
  * @returns 删除空值后的数组对象
  */
 export function handleEmpty(list: any) {
-	const arr = [];
-	for (const i in list) {
-		const d = [];
-		for (const j in list[i]) {
-			d.push(list[i][j]);
-		}
-		const leng = d.filter((item) => item === '').length;
-		if (leng !== d.length) {
-			arr.push(list[i]);
-		}
-	}
-	return arr;
+  const arr = []
+  for (const i in list) {
+    const d = []
+    for (const j in list[i]) {
+      d.push(list[i][j])
+    }
+    const leng = d.filter(item => item === '').length
+    if (leng !== d.length) {
+      arr.push(list[i])
+    }
+  }
+  return arr
 }
 
 /**
@@ -104,7 +107,7 @@ export function handleEmpty(list: any) {
  * @throws {Error} - 如果在非浏览器环境中调用该函数，将抛出错误
  */
 export function linkDownload(fileURL: string | Blob | File, fileName?: string): void {
-  let href: string = isString(fileURL) ? fileURL : URL.createObjectURL(fileURL)
+  const href: string = isString(fileURL) ? fileURL : URL.createObjectURL(fileURL)
   const a = document.createElement('a')
   a.style.display = 'none'
   a.href = href
@@ -112,16 +115,16 @@ export function linkDownload(fileURL: string | Blob | File, fileName?: string): 
   document.body.appendChild(a)
   a.click()
   document.body.removeChild(a)
-  if (!isString(fileURL)) URL.revokeObjectURL(href)
+  if (!isString(fileURL))
+    URL.revokeObjectURL(href)
 }
-
 
 /**
  * 图片转为 Base64 字符串
- * @param {String} imgURL 待转换的图片路径
- * @param {String} type 转换后的图片类型
- * @param  {Number} quality 转换后的图片质量
- * @returns {String} Base64 字符串
+ * @param {string} imgURL 待转换的图片路径
+ * @param {string} type 转换后的图片类型
+ * @param  {number} quality 转换后的图片质量
+ * @returns {string} Base64 字符串
  */
 export function imageToBase64(imgURL: string, quality = 0.9): Promise<string> {
   const img = new Image()
@@ -142,7 +145,6 @@ export function imageToBase64(imgURL: string, quality = 0.9): Promise<string> {
   })
 }
 
-
 /**
  * 获取当前设备的屏幕 DPI（每英寸像素数）
  *  此函数通过创建一个宽度为 1 英寸的临时不可见 div 元素，
@@ -158,4 +160,3 @@ export function getDeviceDpi(): number {
   document.body.removeChild(tempDiv)
   return dpi
 }
-

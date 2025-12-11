@@ -1,4 +1,4 @@
-import { ref, onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import apiTreeData from './.api-tree.json'
 
 interface ApiMethod {
@@ -21,7 +21,8 @@ export function useApiTree() {
       // 从JSON文件加载API数据
       apiMethods.value = apiTreeData as ApiMethod[]
       loading.value = false
-    } catch (err) {
+    }
+    catch (err) {
       error.value = 'Failed to load API data'
       loading.value = false
       console.error('Error loading API tree:', err)
@@ -31,6 +32,6 @@ export function useApiTree() {
   return {
     apiMethods,
     loading,
-    error
+    error,
   }
 }

@@ -4,7 +4,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import process from 'node:process'
 import { promisify } from 'node:util'
-import { cacheFilePath } from '../../../scripts'  
+import { cacheFilePath } from '../../../scripts'
 
 const execPromise = promisify(exec)
 
@@ -35,7 +35,7 @@ async function runTSFileForOptions(options: OptionVo): Promise<void> {
     // 定位 index.ts 文件 绝对路径
     const indexTsPath = path.join(process.cwd(), options.path)
 
-    console.log('indexTsPath',indexTsPath)
+    console.log('indexTsPath', indexTsPath)
     // 使用 tsx 直接运行 TypeScript 文件
     await execPromise(`npx esno ${indexTsPath}`)
     console.log(`${options.path} 已成功运行`)
@@ -49,7 +49,6 @@ async function runTSFileForOptions(options: OptionVo): Promise<void> {
 /**
  * 文档树插件 用于生成文档树
  * @param options 插件配置
- * @returns
  */
 function docsTreePlugin(options: Partial<OptionVo>): PluginOption {
   // 合并配置
